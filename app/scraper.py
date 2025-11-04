@@ -19,19 +19,19 @@ def fetch_article_with_selenium(url, headless=True):
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--window-size=1280,1024")
 
-    print("🚀 启动 Chrome 浏览器...")
+    print("启动 Chrome 浏览器...")
     driver = webdriver.Chrome(
         service=Service(ChromeDriverManager().install()),
         options=chrome_options
     )
 
-    print(f"🌐 正在访问 {url}")
+    print(f"正在访问 {url}")
     driver.get(url)
     time.sleep(3)  # 等待页面加载（可调整）
 
     html_content = driver.page_source
     driver.quit()
-    print("✅ 页面加载完成，开始解析内容...")
+    print("页面加载完成，开始解析内容...")
 
     return parse_article_html(html_content)
 
@@ -47,7 +47,7 @@ def parse_article_html(html_content):
     content_textarea = soup.find("textarea", class_="article-content")
     content_blocks = []  # 顺序保存文本与图片
     images = []
-    seen_images = set()  # 防止重复添加
+    seen_images = set()  # 防止重复添加图片
 
     if content_textarea:
         raw_html = html.unescape(content_textarea.get_text(strip=True))
@@ -64,7 +64,7 @@ def parse_article_html(html_content):
             img = element.find("img")
             if img and img.get("src"):
                 src = normalize_img_url(img["src"])
-                if src not in seen_images:  # ✅ 避免重复
+                if src not in seen_images:
                     seen_images.add(src)
                     content_blocks.append(f"[IMAGE:{src}]")
                     images.append(src)
