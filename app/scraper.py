@@ -27,7 +27,7 @@ def fetch_article_with_selenium(url, headless=True):
 
     print(f"🌐 正在访问 {url}")
     driver.get(url)
-    time.sleep(5)  # 等待页面加载（可调整）
+    time.sleep(3)  # 等待页面加载（可调整）
 
     html_content = driver.page_source
     driver.quit()
